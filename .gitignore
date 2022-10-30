@@ -1,0 +1,38 @@
+# IAR C-STAT and C-RUN
+# Comment this out if you use C-Stat or C-Run to compile/analyze your project
+*.ewt
+
+# IAR Debugger files
+*.ewd
+
+# IAR Settings
+**/settings/
+
+# IAR Debug Exe
+**/Exe/
+
+# IAR Debug List
+**/List/
+
+# IAR Debug Obj
+**/BrowseInfo/
+
+# Log files
+.ninja_deps
+.ninja_log
+
+# IAR .dep files
+*.dep
+
+# Compiled Binaries
+*.bin
+*.elf
+*.hex
+*.map
+*.o
+
+# Trash files
+*.bak
+
+# IAR backup files
+Backup*
