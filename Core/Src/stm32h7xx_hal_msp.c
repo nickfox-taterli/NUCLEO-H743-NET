@@ -34,6 +34,27 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef *hrtc)
 }
 
 /**
+  * @brief RNG MSP Initialization
+  *        This function configures the hardware resources used in this application:
+  *           - Peripheral's clock enable
+  * @param hrng: RNG handle pointer
+  * @retval None
+  */
+void HAL_RNG_MspInit(RNG_HandleTypeDef *hrng)
+{
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct;
+
+  /*Select PLL output as RNG clock source */
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RNG;
+  PeriphClkInitStruct.RngClockSelection = RCC_RNGCLKSOURCE_PLL;
+  HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct);
+
+  /* RNG Peripheral clock enable */
+  __RNG_CLK_ENABLE();
+
+}
+
+/**
  * @brief RTC MSP De-Initialization
  * This function freeze the hardware resources used in this example
  * @param hrtc: RTC handle pointer

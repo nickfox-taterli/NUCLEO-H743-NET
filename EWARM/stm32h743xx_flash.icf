@@ -21,6 +21,12 @@ define region ROM_region      = mem:[from __ICFEDIT_region_ROM_start__   to __IC
 define region RAM_region      = mem:[from __ICFEDIT_region_RAM_start__   to __ICFEDIT_region_RAM_end__];
 define region ITCMRAM_region  = mem:[from __ICFEDIT_region_ITCMRAM_start__ to __ICFEDIT_region_ITCMRAM_end__];
 
+define region D1_AXISRAM_region  = mem:[from 0x24000000 to 0x24060000];
+define region D2_SRAM1_region  = mem:[from 0x30004400 to 0x30020000];
+define region D2_SRAM2_region  = mem:[from 0x30020000 to 0x30040000];
+define region D2_SRAM3_region  = mem:[from 0x30044000 to 0x30048000];
+define region D3_SRAM4_region  = mem:[from 0x38000000 to 0x38010000];
+
 define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
 define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
 
@@ -32,3 +38,9 @@ place at address mem:__ICFEDIT_intvec_start__ { readonly section .intvec };
 place in ROM_region   { readonly };
 place in RAM_region   { readwrite,
                         block CSTACK, block HEAP };
+
+place in D1_AXISRAM_region {section .RAM_D1};
+place in D2_SRAM1_region {section .RAM_D2_SRAM1};
+place in D2_SRAM2_region {section .RAM_D2_SRAM2};
+place in D2_SRAM3_region {section .RAM_D2_SRAM3};
+place in D3_SRAM4_region {section .RAM_D3};

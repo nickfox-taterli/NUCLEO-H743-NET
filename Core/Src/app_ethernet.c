@@ -17,6 +17,8 @@
 #include <string.h>
 #include <time.h>
 
+extern void SSL_Client(void *argument);
+
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -108,6 +110,8 @@ void lwip_dhcp_thread(void *argument)
 
         /* Start NTP */
         xTaskCreate(lwip_ntp_thread, "ntp_thread", configMINIMAL_STACK_SIZE * 2, netif, tskIDLE_PRIORITY + 2, NULL);
+        xTaskCreate(SSL_Client, "SSL_Client", configMINIMAL_STACK_SIZE * 15, netif, tskIDLE_PRIORITY + 2, NULL);
+        
       }
       else
       {
@@ -167,24 +171,49 @@ void lwip_ntp_thread(void *argument)
 extern RTC_HandleTypeDef hrtc;
 void sntp_set_system_time(time_t sntp_time)
 {
-  struct tm *local_time;
+  struct tm *tm;
   RTC_DateTypeDef RTC_DateStructure;
   RTC_TimeTypeDef RTC_TimeStructure;
 
-  local_time = gmtime(&sntp_time);
+  tm = gmtime(&sntp_time);
 
-  RTC_DateStructure.Year = local_time->tm_year + 1900 - 2000;
-  RTC_DateStructure.Month = local_time->tm_mon + 1;
-  RTC_DateStructure.Date = local_time->tm_mday;
-  RTC_DateStructure.WeekDay = local_time->tm_wday;
+  RTC_DateStructure.Year = tm->tm_year + 1900 - 2000;
+  RTC_DateStructure.Month = tm->tm_mon + 1;
+  RTC_DateStructure.Date = tm->tm_mday;
+  RTC_DateStructure.WeekDay = tm->tm_wday;
 
-  RTC_TimeStructure.Hours = local_time->tm_hour + 8; /* UTC + 8 */
-  RTC_TimeStructure.Minutes = local_time->tm_min;
-  RTC_TimeStructure.Seconds = local_time->tm_sec;
+  RTC_TimeStructure.Hours = tm->tm_hour + 8; /* UTC + 8 */
+  RTC_TimeStructure.Minutes = tm->tm_min;
+  RTC_TimeStructure.Seconds = tm->tm_sec;
   RTC_TimeStructure.TimeFormat = RTC_HOURFORMAT12_AM;
   RTC_TimeStructure.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
   RTC_TimeStructure.StoreOperation = RTC_STOREOPERATION_RESET;
 
-  HAL_RTC_SetDate(&hrtc, &RTC_DateStructure, RTC_FORMAT_BCD);
-  HAL_RTC_SetTime(&hrtc, &RTC_TimeStructure, RTC_FORMAT_BCD);
+  HAL_RTC_SetDate(&hrtc, &RTC_DateStructure, RTC_FORMAT_BIN);
+  HAL_RTC_SetTime(&hrtc, &RTC_TimeStructure, RTC_FORMAT_BIN);
+}
+
+time_t rtc_get_system_time(time_t * timer){
+  struct tm tm;
+  RTC_DateTypeDef RTC_DateStructure;
+  RTC_TimeTypeDef RTC_TimeStructure;
+  
+  if(timer != NULL){
+    return time(timer);
+  }
+  
+  HAL_RTC_GetTime(&hrtc, &RTC_TimeStructure, RTC_FORMAT_BIN);
+  HAL_RTC_GetDate(&hrtc, &RTC_DateStructure, RTC_FORMAT_BIN);
+  
+  tm.tm_hour = RTC_TimeStructure.Hours;
+  tm.tm_min = RTC_TimeStructure.Minutes;
+  tm.tm_sec = RTC_TimeStructure.Seconds;
+ 
+  tm.tm_year = RTC_DateStructure.Year + 100;
+  tm.tm_mon = RTC_DateStructure.Month;
+  tm.tm_mday = RTC_DateStructure.Date;
+  tm.tm_wday = RTC_DateStructure.WeekDay;
+  tm.tm_yday = 0; /* Can't Easy Calc,waste time,so ignore it. */
+  
+  return mktime(&tm);
 }

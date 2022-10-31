@@ -229,6 +229,7 @@
                     <state>USE_FULL_LL_DRIVER</state>
                     <state>USE_HAL_DRIVER</state>
                     <state>STM32H743xx</state>
+                    <state>MBEDTLS_CONFIG_FILE=&lt;mbedtls_config.h&gt;</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -289,7 +290,7 @@
                 <option>
                     <name>CCAllowList</name>
                     <version>1</version>
-                    <state>11111110</state>
+                    <state>00000000</state>
                 </option>
                 <option>
                     <name>CCDebugInfo</name>
@@ -359,6 +360,7 @@
                     <state>$PROJ_DIR$/../Middlewares/LwIP/src/include</state>
                     <state>$PROJ_DIR$/../Middlewares/LwIP/system</state>
                     <state>$PROJ_DIR$\..\Drivers\BSP\Components\lan8742</state>
+                    <state>$PROJ_DIR$\..\Middlewares\mbedTLS\include</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -374,7 +376,7 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>3</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
@@ -383,7 +385,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>3</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCPosIndRopi</name>
@@ -1107,7 +1109,16 @@
                     <name>$PROJ_DIR$\..\Core\Src\ethernetif.c</name>
                 </file>
                 <file>
+                    <name>$PROJ_DIR$\..\Core\Src\hardware_rng.c</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\Core\Src\main.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\Core\Src\net_sockets.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\Core\Src\ssl_client.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\Core\Src\stm32h7xx_hal_msp.c</name>
@@ -1193,6 +1204,12 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rcc_ex.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rng.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rng_ex.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rtc.c</name>
@@ -1425,6 +1442,243 @@
                     <name>$PROJ_DIR$\..\Middlewares\LwIP\system\OS\sys_arch.c</name>
                 </file>
             </group>
+        </group>
+        <group>
+            <name>mbedTLS</name>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\aes.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\aesni.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\arc4.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\aria.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\asn1parse.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\asn1write.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\base64.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\bignum.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\blowfish.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\camellia.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ccm.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\certs.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\chacha20.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\chachapoly.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\cipher.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\cipher_wrap.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\cmac.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ctr_drbg.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\debug.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\des.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\dhm.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ecdh.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ecdsa.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ecjpake.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ecp.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ecp_curves.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\entropy.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\entropy_poll.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\error.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\gcm.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\havege.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\hkdf.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\hmac_drbg.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\md.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\md2.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\md4.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\md5.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\md_wrap.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\memory_buffer_alloc.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\nist_kw.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\oid.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\padlock.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\pem.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\pk.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\pk_wrap.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\pkcs11.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\pkcs12.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\pkcs5.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\pkparse.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\pkwrite.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\platform.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\platform_util.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\poly1305.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ripemd160.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\rsa.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\rsa_internal.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\sha1.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\sha256.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\sha512.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ssl_cache.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ssl_ciphersuites.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ssl_cli.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ssl_cookie.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ssl_srv.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ssl_ticket.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\ssl_tls.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\threading.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\timing.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\version.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\version_features.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\x509.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\x509_create.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\x509_crl.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\x509_crt.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\x509_csr.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\x509write_crt.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\x509write_csr.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\mbedTLS\library\xtea.c</name>
+            </file>
         </group>
     </group>
 </project>

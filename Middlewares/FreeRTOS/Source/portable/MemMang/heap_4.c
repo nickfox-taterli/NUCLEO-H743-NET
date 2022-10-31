@@ -43,6 +43,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include "string.h"
 
 #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
 
@@ -63,6 +64,7 @@
 * heap - probably so it can be placed in a special segment or address. */
     extern uint8_t ucHeap[ configTOTAL_HEAP_SIZE ];
 #else
+    #pragma location = 0x24060000
     PRIVILEGED_DATA static uint8_t ucHeap[ configTOTAL_HEAP_SIZE ];
 #endif /* configAPPLICATION_ALLOCATED_HEAP */
 
@@ -270,6 +272,17 @@ void * pvPortMalloc( size_t xWantedSize )
     #endif /* if ( configUSE_MALLOC_FAILED_HOOK == 1 ) */
 
     configASSERT( ( ( ( size_t ) pvReturn ) & ( size_t ) portBYTE_ALIGNMENT_MASK ) == 0 );
+    return pvReturn;
+}
+
+void *pvPortCalloc( size_t n, size_t size )
+{
+    void *pvReturn;
+
+    pvReturn = pvPortMalloc(n * size);
+    if(pvReturn)
+      memset(pvReturn, 0, n * size);
+
     return pvReturn;
 }
 /*-----------------------------------------------------------*/

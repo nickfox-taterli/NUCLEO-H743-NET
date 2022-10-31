@@ -10,7 +10,6 @@
 #include "stm32h7xx_ll_pwr.h"
 #include "stm32h7xx_ll_dma.h"
 
-
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
@@ -20,7 +19,16 @@
 #include "lwip/tcpip.h"
 #include "app_ethernet.h"
 
+/* 特殊预分配 */
+/* 以太网描述符 0x30000000 - 0x30000400 */
+/* LWIP 缓冲区 0x30000400 - 0x30004400 */
+/* LWIP 工作池 0x30040000 - 0x30044000 */
+/* FreeRTOS 工作堆栈 0x24060000 - 0x24080000 */
+
 struct netif gnetif; /* network interface structure */
+
+RTC_HandleTypeDef hrtc;
+RNG_HandleTypeDef hrng;
 
 /**
   * @brief  Initializes the lwIP stack
@@ -62,8 +70,6 @@ static void netif_config(void)
   xTaskCreate(lwip_dhcp_thread, "dhcp_thread", configMINIMAL_STACK_SIZE * 2, &gnetif, tskIDLE_PRIORITY + 2, NULL);
 #endif 
 }
-
-RTC_HandleTypeDef hrtc;
 
 /**
   * @brief System Clock Configuration
@@ -151,16 +157,26 @@ static void MX_RTC_Init(void)
   hrtc.Init.HourFormat = RTC_HOURFORMAT_12;
   hrtc.Init.AsynchPrediv = 127;
   hrtc.Init.SynchPrediv = 255;
-  hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
-  hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
-  hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
-  hrtc.Init.OutPutRemap = RTC_OUTPUT_REMAP_NONE;
   if (HAL_RTC_Init(&hrtc) != HAL_OK)
   {
     for(;;);
   }
   
 }
+
+
+/**
+  * @brief RNG Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_RNG_Init(void)
+{
+  hrng.Instance = RNG;
+  hrng.Init.ClockErrorDetection = RNG_CED_ENABLE;
+  HAL_RNG_Init(&hrng);
+}
+
 /**
   * @brief GPIO Initialization Function
   * @param None
@@ -248,7 +264,8 @@ static void InitThread(void * argument)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_RTC_Init();
-  
+  MX_RNG_Init();
+    
   /* Create tcp_ip stack thread */
   tcpip_init(NULL, NULL);
   
