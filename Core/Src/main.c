@@ -137,6 +137,30 @@ void SystemClock_Config(void)
   }
 }
 
+
+/**
+  * @brief RTC Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_RTC_Init(void)
+{
+  /** Initialize RTC Only
+  */
+  hrtc.Instance = RTC;
+  hrtc.Init.HourFormat = RTC_HOURFORMAT_12;
+  hrtc.Init.AsynchPrediv = 127;
+  hrtc.Init.SynchPrediv = 255;
+  hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
+  hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+  hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
+  hrtc.Init.OutPutRemap = RTC_OUTPUT_REMAP_NONE;
+  if (HAL_RTC_Init(&hrtc) != HAL_OK)
+  {
+    for(;;);
+  }
+  
+}
 /**
   * @brief GPIO Initialization Function
   * @param None
@@ -221,6 +245,10 @@ void MPU_Config(void)
   */
 static void InitThread(void * argument)
 {   
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_RTC_Init();
+  
   /* Create tcp_ip stack thread */
   tcpip_init(NULL, NULL);
   
@@ -255,9 +283,6 @@ int main(void)
 
   /* Configure the system clock */
   SystemClock_Config();
-
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
   
   /* Startup FreeRTOS */
   xTaskCreate(InitThread, "Init", configMINIMAL_STACK_SIZE * 4, NULL, tskIDLE_PRIORITY, NULL);

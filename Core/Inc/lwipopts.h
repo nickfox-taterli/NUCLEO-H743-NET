@@ -186,7 +186,20 @@ The STM32H7xx allows computing and verifying the IP, UDP, TCP and ICMP checksums
 /**
  * LWIP_SOCKET==1: Enable Socket API (require to use sockets.c)
  */
-#define LWIP_SOCKET                     1
+#define LWIP_SOCKET                     0
+
+/*----- Default Value for LWIP_DNS: 0 ---*/
+#define LWIP_DNS 1
+
+/*----- Default Value for LWIP_IPV6: 0 ---*/
+#define LWIP_IPV6 0
+
+/*----- Default Value for LWIP_SNTP: 0 ---*/
+#define LWIP_SNTP 1
+
+#include <time.h>
+void sntp_set_system_time(time_t sec);
+#define SNTP_SET_SYSTEM_TIME(sec) sntp_set_system_time(sec)
 
 /*
    ---------------------------------

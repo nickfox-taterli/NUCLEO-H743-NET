@@ -158,8 +158,8 @@
 #define  USE_SD_TRANSCEIVER           1U               /*!< use uSD Transceiver */
 
 /* ########################### Ethernet Configuration ######################### */
-#define ETH_TX_DESC_CNT         10U  /* number of Ethernet Tx DMA descriptors */
-#define ETH_RX_DESC_CNT         10U  /* number of Ethernet Rx DMA descriptors */
+#define ETH_TX_DESC_CNT         4U  /* number of Ethernet Tx DMA descriptors */
+#define ETH_RX_DESC_CNT         4U  /* number of Ethernet Rx DMA descriptors */
 
 #define ETH_MAC_ADDR0    ((uint8_t)0x02)
 #define ETH_MAC_ADDR1    ((uint8_t)0x00)

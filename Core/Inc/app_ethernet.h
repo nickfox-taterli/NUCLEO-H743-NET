@@ -40,9 +40,12 @@
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 void ethernet_link_status_updated(struct netif *netif);
+
 #if LWIP_DHCP
 void lwip_dhcp_thread(void * argument);
 #endif
+
+void lwip_ntp_thread(void * argument);
 
 #ifdef __cplusplus
 }
